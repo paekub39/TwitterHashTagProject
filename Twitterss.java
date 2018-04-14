@@ -12,18 +12,24 @@ public class Twitterss {
 	static final int count = 100;
 	static long sinceId = 0;
 	static long numberOfTweets = 0;
-
-	public static void main(String[] args) {
+	
+	public static void main(String[] args) throws TwitterException {
 
 		ConfigurationBuilder cb = new ConfigurationBuilder();
-		cb.setOAuthConsumerKey("FExp9NBQDKf8CgcueuV4RCyEo")
-			.setOAuthConsumerSecret("7Ti8hgPcQejRtB9z1oVvvOmvtd1ZWMdzrFPb7aIu7IPjUUtsrO")
-			.setOAuthAccessToken("546477718-4QaOqxpXXMaEysSnzviduW4QMkfTtsJ8UStnUrr0")
-			.setOAuthAccessTokenSecret("3imuRkBBNLXNP6ux4zK2vvCJBMHULtjvM9EXlYM3W1M8c");
+		cb.setOAuthConsumerKey("FgZ2RfP7iXAt5n7ZicOqVPi7n")
+			.setOAuthConsumerSecret("6JL8DwmgKB9AGHJenBGrrer5HkcLtCTA3y9OjTaLuTjUYCGaQ8")
+			.setOAuthAccessToken("546477718-P2Y8SAOJirOv1Tpop5RTgsBnWH3LluzWA31v3hZO")
+			.setOAuthAccessTokenSecret("J4FRKGuI7tK76V287dXhy5SPe77vhPi7tYRBi9v0EVkDI");
 		
-		TwitterFactory tf = new TwitterFactory();
+		TwitterFactory tf = new TwitterFactory(cb.build());
 		Twitter twitter = tf.getInstance();
 		
+		/*List <Status> status = twitter.getHomeTimeline();
+		for(Status st : status){
+			System.out.println(st.getUser().getName()+"-------------------"+st.getText());
+		}*/
+		
+
 		Query queryMax = new Query(hashtag);
 		queryMax.setCount(count);
 		getTweets(queryMax, twitter, "maxId");
@@ -105,5 +111,4 @@ public class Twitterss {
 		}
 		System.out.println("Total tweets count ======= "+ numberOfTweets);
 	}
-
 }
