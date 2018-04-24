@@ -27,10 +27,10 @@ public class Twitterss {
 		ConfigurationBuilder cb = new ConfigurationBuilder();
         fw=new FileWriter("C:/Users/Pae/Desktop/Test.txt");
         bw=new BufferedWriter(fw);
-		cb.setOAuthConsumerKey("FgZ2RfP7iXAt5n7ZicOqVPi7n")
-			.setOAuthConsumerSecret("6JL8DwmgKB9AGHJenBGrrer5HkcLtCTA3y9OjTaLuTjUYCGaQ8")
-			.setOAuthAccessToken("546477718-P2Y8SAOJirOv1Tpop5RTgsBnWH3LluzWA31v3hZO")
-			.setOAuthAccessTokenSecret("J4FRKGuI7tK76V287dXhy5SPe77vhPi7tYRBi9v0EVkDI");
+		cb.setOAuthConsumerKey("")
+			.setOAuthConsumerSecret("")
+			.setOAuthAccessToken("")
+			.setOAuthAccessTokenSecret("");
 		
 		TwitterFactory tf = new TwitterFactory(cb.build());
 		Twitter twitter = tf.getInstance();
