@@ -1,8 +1,12 @@
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import twitter4j.Query;
 import twitter4j.QueryResult;
@@ -17,20 +21,36 @@ public class Twitterss {
 	static BufferedWriter bw=null;
     static FileWriter fw=null;
 	
+    static int numberOfKey = 4;
+    static String twitterKey[][] = new String[numberOfKey][4];
+    
+    static int keyCount = 0;
+    static int tweetsCountForChangeKey = 0;
+    
 	static final String hashtag = "#BlackPanther";
 	static final int count = 65536;
 	static long sinceId = 0;
 	static long numberOfTweets = 0;
 	static String collectTweets = "";
-	public static void main(String[] args) throws TwitterException, FileNotFoundException, IOException {
+	
+	
+	
+	
+    static ConfigurationBuilder cb = new ConfigurationBuilder();
 
-		ConfigurationBuilder cb = new ConfigurationBuilder();
-        fw=new FileWriter("C:/Users/Pae/Desktop/Test.txt");
+	public static void main(String[] args) throws IOException{
+		
+		
+	    
+	    
+	    
+	    
+        fw=new FileWriter("Tweets.txt");
         bw=new BufferedWriter(fw);
-		cb.setOAuthConsumerKey("")
-			.setOAuthConsumerSecret("")
-			.setOAuthAccessToken("")
-			.setOAuthAccessTokenSecret("");
+		cb.setOAuthConsumerKey(twitterKey[0][0])
+			.setOAuthConsumerSecret(twitterKey[0][1])
+			.setOAuthAccessToken(twitterKey[0][2])
+			.setOAuthAccessTokenSecret(twitterKey[0][3]);
 		
 		TwitterFactory tf = new TwitterFactory(cb.build());
 		Twitter twitter = tf.getInstance();
@@ -78,7 +98,7 @@ public class Twitterss {
         return true;
 	}
 	
-	private static void getTweets(Query query, Twitter twitter, String mode){
+	private static void getTweets(Query query, Twitter twitter, String mode) throws IOException{
 		boolean getTweets = true;
 		long maxId = 0;
 		long whileCount = 0;
@@ -91,10 +111,8 @@ public class Twitterss {
 				}else{
 					//System.out.println("***************************");
 					//System.out.println("Gethered " + result.getTweets().size() + " tweets");
-					long xx = 0;
 					int forCount = 0;
 					for(Status status: result.getTweets()){
-						xx++;
 						if(whileCount == 0 && forCount == 0){
 							sinceId = status.getId();
 							System.out.println("SinceID = "+sinceId);
@@ -108,12 +126,26 @@ public class Twitterss {
 							//System.out.println("maxId = " + maxId);
 						}
 						System.out.println("");
-						collectTweets="\nCount: :" +xx+ ": >>>>>>>...ID: " + status.getId() + "::::::::" + status.getUser().getName() +"::::::::::"+ status.getText() + "::::Next::::\n";
+						collectTweets=status.getText() + " Count " + (numberOfTweets+1) + " ";
 						bw.write(collectTweets);
 						forCount++;
 					}
 					numberOfTweets = numberOfTweets + result.getTweets().size();
 					query.setMaxId(maxId-1);
+					//tweetsCountForChangeKey = tweetsCountForChangeKey + result.getTweets().size();
+					if(numberOfTweets >= 15000){
+						tweetsCountForChangeKey = 0;
+						break;
+						/*
+						if(keyCount >= 4) keyCount = 0;
+						cb.setOAuthConsumerKey(twitterKey[keyCount][0])
+							.setOAuthConsumerSecret(twitterKey[keyCount][1])
+							.setOAuthAccessToken(twitterKey[keyCount][2])
+							.setOAuthAccessTokenSecret(twitterKey[keyCount][3]);
+						keyCount++;
+						*/
+					}
+					
 					System.out.println("Total tweets count ======= "+ numberOfTweets);
 				}
 			}catch (TwitterException te) {
@@ -123,8 +155,24 @@ public class Twitterss {
                 System.out.println("Something went wrong: " + e);
                 System.exit(-1);
             }
+			if(numberOfTweets >= 15000){
+				tweetsCountForChangeKey = 0;
+				break;
+				/*
+				if(keyCount >= 4) keyCount = 0;
+				cb.setOAuthConsumerKey(twitterKey[keyCount][0])
+					.setOAuthConsumerSecret(twitterKey[keyCount][1])
+					.setOAuthAccessToken(twitterKey[keyCount][2])
+					.setOAuthAccessTokenSecret(twitterKey[keyCount][3]);
+				keyCount++;
+				*/
+			}
+
 			whileCount++;
 		}
+		
 		System.out.println("Total tweets count ======= "+ numberOfTweets);
+		WordFrequency wf = new WordFrequency();
+		wf.readFile();
 	}
 }
