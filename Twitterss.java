@@ -40,6 +40,10 @@ public class Twitterss {
 
 	public static void main(String[] args) throws IOException{
 		
+	    twitterKey[0][0] = "";
+	    twitterKey[0][1] = "";
+	    twitterKey[0][2] = "";
+	    twitterKey[0][3] = "";
 		
 	    
 	    
