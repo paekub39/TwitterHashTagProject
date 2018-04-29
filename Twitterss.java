@@ -45,8 +45,20 @@ public class Twitterss {
 	    twitterKey[0][2] = "";
 	    twitterKey[0][3] = "";
 		
+	    twitterKey[1][0] = "";
+	    twitterKey[1][1] = "";
+	    twitterKey[1][2] = "";
+	    twitterKey[1][3] = "";
 	    
+	    twitterKey[2][0] = "";
+	    twitterKey[2][1] = "";
+	    twitterKey[2][2] = "";
+	    twitterKey[2][3] = "";
 	    
+	    twitterKey[3][0] = "";
+	    twitterKey[3][1] = "";
+	    twitterKey[3][2] = "";
+	    twitterKey[3][3] = "";
 	    
 	    
         fw=new FileWriter("Tweets.txt");
